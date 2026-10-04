@@ -40,7 +40,7 @@ A Spring Boot REST API to create golfers, build golf courses and simulate a matc
 
 This project exposes a small REST API around three objects: a **golfer**, a **course** (`terain`) made of several **holes** (`trou`), and a **match** between two golfers on a given course.
 
-Golfers and courses are persisted with Spring Data JPA. A match draws a random score for each player, starting from the par of the course, and returns a sentence naming the winner — in golf the lowest score wins.
+Golfers and courses are persisted with Spring Data JPA. A match draws a random score for each player, starting from the par of the course, and returns a sentence naming the winner - in golf the lowest score wins.
 
 ```
 POST /game/play?joueur1=1&joueur2=2&terain=1
@@ -76,7 +76,7 @@ git clone https://github.com/maximilien-ilic/Java-Golf.git
 cd Java-Golf
 ```
 
-2. Start the application — **with Docker** (PostgreSQL, data survives a restart)
+2. Start the application - **with Docker** (PostgreSQL, data survives a restart)
 ```sh
 docker compose up --build
 ```
@@ -104,7 +104,7 @@ The API listens on `http://localhost:8080` in both cases. Maven does not need to
 
 ### Postman Collection
 
-Import `Golf.postman_collection.json` into Postman — **File → Import** — and run the folders in order, or hit **Run collection** to fire everything at once.
+Import `Golf.postman_collection.json` into Postman - **File → Import** - and run the folders in order, or hit **Run collection** to fire everything at once.
 
 The collection ships with ready-made data (two golfers, two courses) and chains the requests automatically: the ids returned by the create calls are stored in collection variables and reused by the match request, so nothing has to be typed by hand.
 
@@ -126,7 +126,7 @@ POST http://localhost:8080/golf/add?nom=max&club=fer7&handicap=20&swing=40&force
 {"nom":"max","club":"fer7","handicap":20,"swing":40,"force":50,"id":2}
 ```
 
-**3. Create a course** — Body → raw → JSON
+**3. Create a course** - Body → raw → JSON
 ```http
 POST http://localhost:8080/terain/add
 ```
@@ -142,7 +142,7 @@ POST http://localhost:8080/terain/add
   ]
 }
 ```
-The response carries the generated ids — keep the course id for step 6.
+The response carries the generated ids - keep the course id for step 6.
 ```json
 {"nom":"GreenFEE","dificulter":"Facile","handicapNeccessaire":50,"trous":[{"numero":1,"par":4,"distance":350,"id":1},{"numero":2,"par":3,"distance":160,"id":2},{"numero":3,"par":5,"distance":480,"id":3}],"id":1}
 ```
@@ -157,7 +157,7 @@ GET http://localhost:8080/golf/get?id=1
 GET http://localhost:8080/terain/get?id=1
 ```
 
-**6. Play the match** — the answer changes on every call
+**6. Play the match** - the answer changes on every call
 ```http
 POST http://localhost:8080/game/play?joueur1=1&joueur2=2&terain=1
 ```
@@ -167,7 +167,7 @@ Sur le terrain GreenFEE (par 12) : raphael a fait 14 coups, max a fait 13 coups.
 Sur le terrain GreenFEE (par 12) : raphael a fait 12 coups, max a fait 12 coups. Egalite, personne ne gagne !
 ```
 
-> **Order matters.** Ids start at 1 and are handed out in creation order. Calling step 6 before the golfers and the course exist returns HTTP 500 — `getById` calls `.get()` on an empty `Optional`. Same thing for any id that does not exist.
+> **Order matters.** Ids start at 1 and are handed out in creation order. Calling step 6 before the golfers and the course exist returns HTTP 500 - `getById` calls `.get()` on an empty `Optional`. Same thing for any id that does not exist.
 
 ---
 
@@ -181,7 +181,7 @@ Sur le terrain GreenFEE (par 12) : raphael a fait 12 coups, max a fait 12 coups.
 
 A course owns its holes through a `@OneToMany` relation: the link lives in a `terain_id` foreign key on the `trou` table, so creating a course inserts its holes in the same call.
 
-The Docker setup also ships **Adminer** to browse the tables at `http://localhost:8081` — system `PostgreSQL`, server `db`, user `postgres`, password from `.env`, database `golf`.
+The Docker setup also ships **Adminer** to browse the tables at `http://localhost:8081` - system `PostgreSQL`, server `db`, user `postgres`, password from `.env`, database `golf`.
 
 ---
 
@@ -201,7 +201,7 @@ Distributed under the MIT License.
 
 ## Contact
 
-Maximilien Ilic — [LinkedIn](https://www.linkedin.com/in/maximilien-ilic/) — maximilien.ilic@gmail.com
+Maximilien Ilic - [LinkedIn](https://www.linkedin.com/in/maximilien-ilic/) - maximilien.ilic@gmail.com
 
 ---
 
