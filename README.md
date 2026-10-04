@@ -167,8 +167,6 @@ Sur le terrain GreenFEE (par 12) : raphael a fait 14 coups, max a fait 13 coups.
 Sur le terrain GreenFEE (par 12) : raphael a fait 12 coups, max a fait 12 coups. Egalite, personne ne gagne !
 ```
 
-> **Order matters.** Ids start at 1 and are handed out in creation order. Calling step 6 before the golfers and the course exist returns HTTP 500 - `getById` calls `.get()` on an empty `Optional`. Same thing for any id that does not exist.
-
 ---
 
 ## Database
