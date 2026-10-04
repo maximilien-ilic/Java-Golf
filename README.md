@@ -29,11 +29,10 @@ A Spring Boot REST API to create golfers, build golf courses and simulate a matc
    - [Postman Collection](#postman-collection)
    - [Step by Step](#step-by-step)
 4. [Database](#database)
-5. [Roadmap](#roadmap)
-6. [Contributing](#contributing)
-7. [License](#license)
-8. [Contact](#contact)
-9. [Acknowledgements](#acknowledgements)
+5. [Contributing](#contributing)
+6. [License](#license)
+7. [Contact](#contact)
+8. [Acknowledgements](#acknowledgements)
 
 ---
 
@@ -186,19 +185,7 @@ The Docker setup also ships **Adminer** to browse the tables at `http://localhos
 
 ---
 
-## Roadmap
 
-- [x] Create a golfer
-- [x] Create a course with its holes
-- [x] Persist everything with JPA
-- [x] Play a match between two golfers and name the winner
-- [x] Docker Compose setup with PostgreSQL and Adminer
-- [ ] Score based on the golfer stats instead of a random draw
-- [ ] Club selection and shot by shot simulation
-- [ ] Handicap computed from the played rounds
-- [ ] More than two players per match
-
----
 
 ## Contributing
 
