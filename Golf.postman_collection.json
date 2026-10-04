@@ -1,0 +1,201 @@
+{
+  "info": {
+    "name": "Java Golf",
+    "description": "Ready to run collection for the Java Golf API. Start the app (docker compose up --build, or ./mvnw spring-boot:run) then hit 'Run collection'. Ids are captured automatically from the responses, nothing has to be typed by hand.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "joueur1Id", "value": "1" },
+    { "key": "joueur2Id", "value": "2" },
+    { "key": "terainId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "1 - Golfers",
+      "item": [
+        {
+          "name": "Create golfer - raphael",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"golfer created\", () => pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set(\"joueur1Id\", pm.response.json().id);",
+                  "console.log(\"joueur1Id =\", pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/golf/add?nom=raphael&club=driver&handicap=10&swing=80&force=70",
+              "host": ["{{baseUrl}}"],
+              "path": ["golf", "add"],
+              "query": [
+                { "key": "nom", "value": "raphael" },
+                { "key": "club", "value": "driver" },
+                { "key": "handicap", "value": "10" },
+                { "key": "swing", "value": "80" },
+                { "key": "force", "value": "70" }
+              ]
+            },
+            "description": "Creates the first player. The generated id is stored in the joueur1Id collection variable."
+          }
+        },
+        {
+          "name": "Create golfer - max",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"golfer created\", () => pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set(\"joueur2Id\", pm.response.json().id);",
+                  "console.log(\"joueur2Id =\", pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/golf/add?nom=max&club=fer7&handicap=20&swing=40&force=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["golf", "add"],
+              "query": [
+                { "key": "nom", "value": "max" },
+                { "key": "club", "value": "fer7" },
+                { "key": "handicap", "value": "20" },
+                { "key": "swing", "value": "40" },
+                { "key": "force", "value": "50" }
+              ]
+            },
+            "description": "Creates the second player. Do not restart the app between the two calls, the id counter would reset."
+          }
+        },
+        {
+          "name": "Get golfer by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/golf/get?id={{joueur1Id}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["golf", "get"],
+              "query": [{ "key": "id", "value": "{{joueur1Id}}" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Courses",
+      "item": [
+        {
+          "name": "Create course - GreenFEE (3 holes, par 12)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"course created\", () => pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set(\"terainId\", pm.response.json().id);",
+                  "console.log(\"terainId =\", pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"GreenFEE\",\n  \"dificulter\": \"Facile\",\n  \"handicapNeccessaire\": 50,\n  \"trous\": [\n    { \"numero\": 1, \"par\": 4, \"distance\": 350 },\n    { \"numero\": 2, \"par\": 3, \"distance\": 160 },\n    { \"numero\": 3, \"par\": 5, \"distance\": 480 }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/terain/add",
+              "host": ["{{baseUrl}}"],
+              "path": ["terain", "add"]
+            },
+            "description": "Creates a short easy course. The holes are inserted in the same call thanks to the cascade on the @OneToMany relation."
+          }
+        },
+        {
+          "name": "Create course - Saint Andrews (9 holes, par 36)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Saint Andrews\",\n  \"dificulter\": \"Difficile\",\n  \"handicapNeccessaire\": 20,\n  \"trous\": [\n    { \"numero\": 1, \"par\": 4, \"distance\": 340 },\n    { \"numero\": 2, \"par\": 4, \"distance\": 380 },\n    { \"numero\": 3, \"par\": 3, \"distance\": 170 },\n    { \"numero\": 4, \"par\": 5, \"distance\": 500 },\n    { \"numero\": 5, \"par\": 4, \"distance\": 400 },\n    { \"numero\": 6, \"par\": 3, \"distance\": 150 },\n    { \"numero\": 7, \"par\": 4, \"distance\": 360 },\n    { \"numero\": 8, \"par\": 5, \"distance\": 520 },\n    { \"numero\": 9, \"par\": 4, \"distance\": 390 }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/terain/add",
+              "host": ["{{baseUrl}}"],
+              "path": ["terain", "add"]
+            },
+            "description": "A longer course. Its handicapNeccessaire of 20 is a second example, it is not checked by the API."
+          }
+        },
+        {
+          "name": "Get course by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/terain/get?id={{terainId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["terain", "get"],
+              "query": [{ "key": "id", "value": "{{terainId}}" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - Match",
+      "item": [
+        {
+          "name": "Play a match",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"match played\", () => pm.response.to.have.status(200));",
+                  "console.log(pm.response.text());"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/game/play?joueur1={{joueur1Id}}&joueur2={{joueur2Id}}&terain={{terainId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["game", "play"],
+              "query": [
+                { "key": "joueur1", "value": "{{joueur1Id}}" },
+                { "key": "joueur2", "value": "{{joueur2Id}}" },
+                { "key": "terain", "value": "{{terainId}}" }
+              ]
+            },
+            "description": "Returns a plain text sentence naming the winner. Send it several times, the scores are drawn at random on every call."
+          }
+        }
+      ]
+    }
+  ]
+}
